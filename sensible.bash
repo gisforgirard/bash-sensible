@@ -52,6 +52,11 @@ shopt -s cmdhist
 # Record each line as it gets issued
 PROMPT_COMMAND='history -a'
 
+## reedit a history substitution line if it failed
+shopt -s histreedit
+## edit a recalled history line before executing
+shopt -s histverify
+
 # Huge history. Doesn't appear to slow things down, so why not?
 HISTSIZE=500000
 HISTFILESIZE=100000
