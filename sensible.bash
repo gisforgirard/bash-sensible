@@ -49,8 +49,19 @@ shopt -s histappend
 # Save multi-line commands as one command
 shopt -s cmdhist
 
-# Record each line as it gets issued
-PROMPT_COMMAND='history -a'
+# see: https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
+_bash_history_sync() {
+  builtin history -a         #1
+  HISTFILESIZE=$HISTSIZE     #2
+  builtin history -c         #3
+  builtin history -r         #4
+}
+PROMPT_COMMAND=_bash_history_sync
+
+history() {                  #5
+  _bash_history_sync
+  builtin history "$@"
+}
 
 ## reedit a history substitution line if it failed
 shopt -s histreedit
